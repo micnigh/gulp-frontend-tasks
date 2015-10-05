@@ -5,6 +5,10 @@
   "author": "Michael Nigh <contact@mnigh.com>",
   "engine": "node 4.0.0",
   "license": "MIT",
+  "repository" : {
+     "type" : "git",
+     "url" : "https://github.com/micnigh/gulp-frontend-tasks.git"
+   },
   "devDependencies": {
     "async": "^1.4.2",
     "babel": "^5.8.23",
