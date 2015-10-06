@@ -11,6 +11,5 @@ I've found myself reusing most of the same tasks with slight variations.  Over t
 # TODO
 
 - Add karma task
-- Add livereload, browsersync, or similar
 - Add scss task
 - Organize dependencies

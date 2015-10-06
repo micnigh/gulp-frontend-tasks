@@ -16,6 +16,7 @@ var generateLessTask = function (gulp = require("gulp"), options) {
       "node_modules/",
     ],
     dest: dest,
+    browsersync: browsersync = null,
   } = options;
 
   var lessPlugins = [];
@@ -48,15 +49,17 @@ var generateLessTask = function (gulp = require("gulp"), options) {
 
   lessPipe = lessPipe.pipe(gulp.dest(dest));
 
-  if (isDev) {
-    // TODO: livereload here
+  if (isDev && browsersync !== null) {
+    lessPipe = lessPipe.pipe(browsersync.stream({ match: "**/*.css" }));
   }
 
-  return lessPipe.pipe(size({
+  lessPipe = lessPipe.pipe(size({
     showFiles: true,
     title: taskName,
     gzip: true,
   }));
+
+  return lessPipe;
 };
 
 module.exports = generateLessTask;

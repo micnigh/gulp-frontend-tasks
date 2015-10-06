@@ -15,6 +15,7 @@ var generateJsTask = function (gulp = require("gulp"), options) {
     destFileName: destFileName,
     browserify: browserifyOptions,
     watchify_enabled: watchify_enabled = false,
+    browsersync: browsersync,
   }) {
     var runningBrowserifyTasks = [];
 
@@ -38,6 +39,7 @@ var generateJsTask = function (gulp = require("gulp"), options) {
           destFileName: destFileName,
           dest: dest,
           relativePath: relativePath,
+          browsersync: browsersync,
           browserifyOptions: deepExtend({}, browserifyOptions, {
             entries: [
               entryFile,

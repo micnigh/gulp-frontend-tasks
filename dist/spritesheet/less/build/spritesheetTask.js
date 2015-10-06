@@ -12,6 +12,8 @@ var rename = require("gulp-rename");
 var crypto = require("crypto");
 require("colors"); // allow printing to the console in different colors
 
+var isDev = "development" === process.env.BUILD_ENV;
+
 var generateSpritesheetTask = function generateSpritesheetTask(gulp, options) {
   if (gulp === undefined) gulp = require("gulp");
   var taskName = options.taskName;
@@ -61,7 +63,8 @@ var generateSpritesheetTask = function generateSpritesheetTask(gulp, options) {
   });
 
   gulp.task(taskName + ":inject-md5-name-into-css", [taskName + ":build"], function () {
-    return gulp.src(spriteLessOutputFile).pipe(replace(new RegExp(newSpritesheetName, "g"), md5SpritesheetName)).pipe(gulp.dest(spriteLessOutputFolder));
+    var p = gulp.src(spriteLessOutputFile).pipe(replace(new RegExp(newSpritesheetName, "g"), md5SpritesheetName)).pipe(gulp.dest(spriteLessOutputFolder));
+    return p;
   });
 };
 

@@ -25,6 +25,7 @@ var browserifyTask = function (gulp = require("gulp"), {
   relativePath: relativePath,
   watchify_enabled: watchify_enabled = false,
   browserifyOptions: browserifyOptions,
+  browsersync: browsersync = null,
 }) {
   browserifyOptions = deepExtend({
     extensions: [".js", ".jsx", ".es6"],
@@ -106,23 +107,18 @@ var browserifyTask = function (gulp = require("gulp"), {
         .pipe(uglifyTimer);
     }
 
-    p
-      .pipe(gulp.dest(dest))
-      .pipe(size({
-        showFiles: true,
-        title: taskName,
-        gzip: true,
-      }));
+    p = p
+      .pipe(gulp.dest(dest));
 
-    p
-      .on("end", function () {
-        // TODO: figure out how to handle livereload
-        // if (livereloadJs){
-        //   var changeUrl = "http://127.0.0.1:" + livereloadPort + "/changed?files=index.html";
-        //   console.log("Triggering livereload: " + changeUrl);
-        //   request(changeUrl, function () { /* do nothing */ });
-        // }
-      });
+    if (isDev && browsersync !== null) {
+      p = p.pipe(browsersync.stream({ match: "**/*.js" }));
+    }
+
+    p = p.pipe(size({
+      showFiles: true,
+      title: taskName,
+      gzip: true,
+    }));
 
     return p;
   };

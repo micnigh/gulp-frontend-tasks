@@ -18,6 +18,7 @@ var generateJsTask = function generateJsTask(gulp, options) {
     var browserifyOptions = _ref.browserify;
     var _ref$watchify_enabled = _ref.watchify_enabled;
     var watchify_enabled = _ref$watchify_enabled === undefined ? false : _ref$watchify_enabled;
+    var browsersync = _ref.browsersync;
 
     var runningBrowserifyTasks = [];
 
@@ -41,6 +42,7 @@ var generateJsTask = function generateJsTask(gulp, options) {
           destFileName: destFileName,
           dest: dest,
           relativePath: relativePath,
+          browsersync: browsersync,
           browserifyOptions: deepExtend({}, browserifyOptions, {
             entries: [entryFile],
             paths: includes
