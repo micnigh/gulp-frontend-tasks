@@ -1,6 +1,5 @@
 "use strict";
 
-var _ = require("underscore");
 var glob = require("glob");
 var deepExtend = require("../../util/deepExtend");
 
@@ -31,9 +30,9 @@ var generateJsTask = function generateJsTask(gulp, options) {
     }
 
     var subTasks = [];
-    _.each(entries, function (entry) {
+    entries.forEach(function (entry) {
       var entryFiles = glob.sync(entry);
-      _.each(entryFiles, function (entryFile) {
+      entryFiles.forEach(function (entryFile) {
         var relativePath = entryFile.replace(entry.split("*")[0], "");
         var entryFileTaskName = taskName + ":" + entryFile;
 
@@ -65,7 +64,7 @@ var generateJsTask = function generateJsTask(gulp, options) {
     gulp.task(taskName, subTasks);
 
     var stopRunningTasks = function stopRunningTasks() {
-      _.each(runningBrowserifyTasks, function (_ref2) {
+      runningBrowserifyTasks.forEach(function (_ref2) {
         var taskName = _ref2.taskName;
         var pipe = _ref2.pipe;
         var bundle = _ref2.bundle;

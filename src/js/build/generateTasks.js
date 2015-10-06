@@ -1,4 +1,3 @@
-var _ = require("underscore");
 var glob = require("glob");
 var deepExtend = require("../../util/deepExtend");
 
@@ -28,9 +27,9 @@ var generateJsTask = function (gulp = require("gulp"), options) {
     }
 
     var subTasks = [];
-    _.each(entries, (entry) => {
+    entries.forEach((entry) => {
       var entryFiles = glob.sync(entry);
-      _.each(entryFiles, entryFile => {
+      entryFiles.forEach(entryFile => {
         var relativePath = entryFile.replace(entry.split("*")[0], "");
         var entryFileTaskName = taskName + ":" + entryFile;
 
@@ -64,7 +63,7 @@ var generateJsTask = function (gulp = require("gulp"), options) {
     gulp.task(taskName, subTasks);
 
     var stopRunningTasks = function () {
-      _.each(runningBrowserifyTasks, function ({ taskName: taskName, pipe: pipe, bundle: bundle }) {
+      runningBrowserifyTasks.forEach(function ({ taskName: taskName, pipe: pipe, bundle: bundle }) {
         pipe.emit("exit");
         if (typeof bundle.close !== "undefined") {
           console.log("CLOSING browserify task for " + taskName + "");
