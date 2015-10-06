@@ -19,6 +19,8 @@ var generateJsTask = function (gulp = require("gulp"), options) {
   }) {
     var runningBrowserifyTasks = [];
 
+    gulp.task("build:js:" + taskName, ["build:js:browserify:" + taskName]);
+
     if (!watchify_enabled) {
       taskName = "build:js:browserify:" + taskName;
     } else {
