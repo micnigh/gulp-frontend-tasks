@@ -16,6 +16,7 @@ var generateJsTasks = function (gulp = require("gulp"),{
   if (browsersync !== null) {
     browsersync.instance.emitter.on("init", () => {
       // regenerate js so we can embed browsersync snippet
+      console.log(`browsersync ready - reload task ${buildTaskName}`);
       generateJsWatchifyResult = generateJsWatchify(generateJsWatchifyResult);
       gulp.start(buildTaskName);
     });

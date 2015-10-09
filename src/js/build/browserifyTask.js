@@ -48,9 +48,11 @@ var browserifyTask = function (gulp = require("gulp"), {
 
   var bundleEnv = _.extend({}, process.env, {
     // pass extra env info
+    NODE_ENV: process.env.NODE_ENV,
     BUILD_ENV: process.env.BUILD_ENV,
     BROWSERSYNC_ENABLED: browsersyncReady ? "true" : "false",
     BROWSERSYNC_SNIPPET: browsersyncSnippet,
+    _: "purge",
   });
 
   var {
