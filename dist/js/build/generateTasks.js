@@ -73,7 +73,7 @@ var generateJsTask = function generateJsTask(gulp, options) {
 
         pipe.emit("exit");
         if (typeof bundle.close !== "undefined") {
-          console.log("CLOSING browserify task for " + taskName + "");
+          console.log("closing browserify task for " + taskName + "");
           pipe.emit("exit");
           bundle.reset();
         }

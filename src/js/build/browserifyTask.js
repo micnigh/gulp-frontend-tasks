@@ -27,6 +27,8 @@ var browserifyTask = function (gulp = require("gulp"), {
   browserifyOptions: browserifyOptions,
   browsersync: browsersync = null,
 }) {
+  var browsersyncReady = browsersync !== null && typeof browsersync.instance !== "undefined" && typeof browsersync.instance.options !== "undefined";
+
   browserifyOptions = deepExtend({
     extensions: [".js", ".jsx", ".es6"],
     externals: [],
@@ -39,8 +41,16 @@ var browserifyTask = function (gulp = require("gulp"), {
     destFileName = path.basename(relativePath);
   }
 
+  var browsersyncSnippet = null;
+  if (isDev && watchify_enabled && browsersyncReady) {
+    browsersyncSnippet = browsersync.instance.options.get("snippet");
+  }
+
   var bundleEnv = _.extend({}, process.env, {
-    // pass extra env info (livereload?)
+    // pass extra env info
+    BUILD_ENV: process.env.BUILD_ENV,
+    BROWSERSYNC_ENABLED: browsersyncReady ? "true" : "false",
+    BROWSERSYNC_SNIPPET: browsersyncSnippet,
   });
 
   var {
@@ -110,7 +120,7 @@ var browserifyTask = function (gulp = require("gulp"), {
     p = p
       .pipe(gulp.dest(dest));
 
-    if (isDev && browsersync !== null) {
+    if (isDev && watchify_enabled && browsersync !== null) {
       p = p.pipe(browsersync.stream({ match: "**/*.js" }));
     }
 

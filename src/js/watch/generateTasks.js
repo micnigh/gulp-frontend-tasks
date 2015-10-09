@@ -10,8 +10,16 @@ var generateJsTasks = function (gulp = require("gulp"),{
       generateJsTasksResult: generateJsWatchifyResult,
     },
   },
+  browsersync: browsersync = null,
 }) {
   var buildTaskName = "build:js:watchify:" + taskName;
+  if (browsersync !== null) {
+    browsersync.instance.emitter.on("init", () => {
+      // regenerate js so we can embed browsersync snippet
+      generateJsWatchifyResult = generateJsWatchify(generateJsWatchifyResult);
+      gulp.start(buildTaskName);
+    });
+  }
   taskName = "watch:js:" + taskName;
   gulp.task(taskName, function () {
     gulp.start(buildTaskName);
