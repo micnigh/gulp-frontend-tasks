@@ -1,0 +1,3 @@
+[submodule "examples/boilerplate-gulp-generic"]
+	path = examples/boilerplate-gulp-generic
+	url = https://github.com/micnigh/boilerplate-gulp-generic
