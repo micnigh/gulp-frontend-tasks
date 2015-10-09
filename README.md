@@ -1,20 +1,14 @@
-# Gulp Front End task generator
+# gulp-front-end-tasks
 
-## Why?
+A collection of common front end gulp tasks.
 
-Most projects define the same gulp tasks on every project - why not share those tasks instead?
-
-With a minimal amount of configuration - most tasks can be reused in small or big projects.
-
-## Quick start
-
-install to project
+## Install
 
 ```bash
 npm install --save-dev "micnigh/gulp-frontend-tasks"
 ```
 
-Generate some tasks
+## Usage
 
 `gulpfile.js`
 ```javascript
@@ -48,6 +42,7 @@ gft.generateTask("js", {
   ],
 });
 
+// once generated, we can refer to them like normal gulp tasks
 gulp.task("build:js", [
   "build:js:app",
 ]);
@@ -57,7 +52,13 @@ gulp.task("watch:js", [
 ]);
 ```
 
-See examples for usage inside projects
+See examples for complete gulp scripts
+
+## Why?
+
+Most projects define the same gulp tasks on every project - why not share those tasks instead?
+
+With a minimal amount of configuration most tasks can be reused for small or big projects.
 
 ## API Examples
 
