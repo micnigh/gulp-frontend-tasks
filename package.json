@@ -38,6 +38,7 @@
     "gulp-livereload": "^3.8.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
+    "gulp-sass": "^2.0.4",
     "gulp-size": "^2.0.0",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-streamify": "1.0.2",
@@ -72,5 +73,7 @@
     "word-wrap": "^1.1.0",
     "yargs": "^3.21.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+
+  }
 }

@@ -110,6 +110,27 @@ gft.generateTask("js", {
 });
 ```
 
+### css:scss
+
+```javascript
+gft.generateTask("css:scss", {
+  taskName: "app",
+  entries: [
+    "client/css/src/*.scss",
+  ],
+  includes: [
+    "client/css/src/",
+    "node_modules/",
+  ],
+  dest: distPath + "/css/",
+  watch: [
+    "client/css/src/**/*.scss",
+  ],
+  // reload browsersync instance after each build
+  // browsersync: browsersyncInstance,
+});
+```
+
 ### css:less
 
 ```javascript
