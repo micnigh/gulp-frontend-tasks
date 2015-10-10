@@ -2,13 +2,14 @@
 
 var _ = require("underscore");
 var path = require("path");
-var duration = require("gulp-duration");
 var buffer = require("gulp-buffer");
 var sourcemaps = require("gulp-sourcemaps");
 var rename = require("gulp-rename");
 var size = require("gulp-size");
 var uglify = require("gulp-uglify");
-require("colors"); // add console log colors
+var gutil = require("gulp-util");
+var prettyTime = require("pretty-hrtime");
+var chalk = require("chalk");
 
 var deepExtend = require("../../util/deepExtend");
 
@@ -94,12 +95,14 @@ var browserifyTask = function browserifyTask(gulp, _ref) {
   b.transform(envify(bundleEnv));
 
   var bundle = function bundle() {
-    var bundleTimer = duration(taskName + ":bundle:" + destFileName);
-    var uglifyTimer = duration(taskName + ":uglify:" + destFileName);
+    var bundleStartTime = process.hrtime();
+    var uglifyStartTime = null;
 
     var p = b.bundle().on("error", function (msg) {
-      console.log(msg.toString().red);
-    }).pipe(bundleTimer)
+      gutil.log(chalk.red(msg.toString()));
+    }).on("end", function () {
+      gutil.log("Bundled " + chalk.cyan(taskName + ":bundle:" + destFileName) + " " + chalk.magenta(prettyTime(process.hrtime(bundleStartTime))));
+    })
 
     // convert back to gulp pipe
     .pipe(source(destFileName)).pipe(buffer());
@@ -109,7 +112,11 @@ var browserifyTask = function browserifyTask(gulp, _ref) {
         extname: ".js"
       })).pipe(sourcemaps.write("./")).pipe(gulp.dest(dest));
     } else {
-      p.once("data", uglifyTimer.start).pipe(uglify()).pipe(uglifyTimer);
+      p.once("data", function () {
+        uglifyStartTime = process.hrtime();
+      }).pipe(uglify()).on("end", function () {
+        gutil.log("Bundled " + chalk.cyan(taskName + ":uglify:" + destFileName) + " " + chalk.magenta(prettyTime(process.hrtime(uglifyStartTime))));
+      });
     }
 
     p = p.pipe(gulp.dest(dest));

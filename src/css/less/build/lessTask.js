@@ -3,8 +3,9 @@ var sourcemaps = require("gulp-sourcemaps");
 var LessPluginCleanCSS = require("less-plugin-clean-css");
 var cleancss = new LessPluginCleanCSS({ advanced: true });
 var autoprefixer = require("gulp-autoprefixer");
+var gutil = require("gulp-util");
 var size = require("gulp-size");
-require("colors"); // allow printing to the console in different colors
+var chalk = require("chalk");
 
 var isDev = "development" === process.env.BUILD_ENV;
 
@@ -36,7 +37,7 @@ var generateLessTask = function (gulp = require("gulp"), options) {
   }))
     .on("error", function (msg) {
       msg.showProperties = false;
-      console.log(msg.toString().red);
+      gutil.log(chalk.red(msg.toString()));
       this.emit("end");
     })
     .pipe(autoprefixer());

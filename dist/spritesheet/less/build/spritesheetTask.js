@@ -10,9 +10,6 @@ var es = require("event-stream");
 var replace = require("gulp-replace");
 var rename = require("gulp-rename");
 var crypto = require("crypto");
-require("colors"); // allow printing to the console in different colors
-
-var isDev = "development" === process.env.BUILD_ENV;
 
 var generateSpritesheetTask = function generateSpritesheetTask(gulp, options) {
   if (gulp === undefined) gulp = require("gulp");
