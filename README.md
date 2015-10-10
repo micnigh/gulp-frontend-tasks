@@ -153,7 +153,6 @@ gft.generateTask("spritesheet:less", {
 
 ## TODO
 
-- Add karma task
 - Add scss task
 - Organize dependencies
 - Publish to NPM
