@@ -1,6 +1,6 @@
 "use strict";
 
-var deepExtend = require("../../../util/deepExtend");
+var deepExtend = require("../../util/deepExtend");
 var spritesheetTask = require("./spritesheetTask");
 
 var generateLessTasks = function generateLessTasks(gulp, options) {
@@ -10,7 +10,7 @@ var generateLessTasks = function generateLessTasks(gulp, options) {
   var _options$dependsOn = _options.dependsOn;
   var dependsOn = _options$dependsOn === undefined ? [] : _options$dependsOn;
 
-  taskName = "build:spritesheet:less:" + taskName;
+  taskName = "build:spritesheet:" + taskName;
 
   options = deepExtend({}, options, {
     taskName: taskName,

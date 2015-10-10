@@ -5,8 +5,8 @@ var generateSpritesheetTasks = function (gulp = require("gulp"),{
   taskName: taskName,
   watch: watch,
 }) {
-  var buildTaskName = "build:spritesheet:less:" + taskName;
-  taskName = "watch:spritesheet:less:" + taskName;
+  var buildTaskName = "build:spritesheet:" + taskName;
+  taskName = "watch:spritesheet:" + taskName;
   gulp.task(taskName, function () {
     gulp.start(buildTaskName);
     return gWatch(

@@ -15,7 +15,8 @@ var generateSpritesheetTask = function (gulp = require("gulp"), options) {
     src: src,
     dest: dest,
     destFileName: destFileName,
-    lessSpriteFile: lessSpriteFile,
+    spriteCSSFile: spriteCSSFile,
+    buildCSSTask: buildCSSTask = null,
     dependsOn: dependsOn,
   } = options;
 
@@ -25,27 +26,27 @@ var generateSpritesheetTask = function (gulp = require("gulp"), options) {
   ]));
 
   var spriteSmith = null;
-  var lessFileName = path.basename(lessSpriteFile);
+  var cssFileName = path.basename(spriteCSSFile);
   var newSpritesheetName = "spritesheet_" + (+ new Date()) + ".png";
   var md5SpritesheetName = "";
   var md5Png = "";
 
   var spriteOutputFolder = dest;
-  var spriteLessOutputFolder = path.dirname(lessSpriteFile);
-  var spriteLessOutputFile = lessSpriteFile;
+  var spriteCSSOutputFolder = path.dirname(spriteCSSFile);
+  var spriteCSSOutputFile = spriteCSSFile;
 
   gulp.task(taskName + ":build", function () {
     newSpritesheetName = "spritesheet_" + (+ new Date());
 
     del([spriteOutputFolder + "/spritesheet*.png"]);
 
-    // touch sprites.less to create if it doesnt exist
-    fs.closeSync(fs.openSync(spriteLessOutputFile, "w"));
+    // touch `spriteCSSOutputFile` to create if it doesnt exist
+    fs.closeSync(fs.openSync(spriteCSSOutputFile, "w"));
 
     spriteSmith = gulp.src(src)
     .pipe(spritesmith({
       imgName: newSpritesheetName + ".png",
-      cssName: lessFileName
+      cssName: cssFileName
     }));
 
     var imgPipe = spriteSmith.img
@@ -62,7 +63,7 @@ var generateSpritesheetTask = function (gulp = require("gulp"), options) {
       .pipe(gulp.dest(spriteOutputFolder));
 
     var cssPipe = spriteSmith.css
-      .pipe(gulp.dest(spriteLessOutputFolder));
+      .pipe(gulp.dest(spriteCSSOutputFolder));
 
     return merge(imgPipe, cssPipe);
   });
@@ -70,9 +71,12 @@ var generateSpritesheetTask = function (gulp = require("gulp"), options) {
   gulp.task(taskName + ":inject-md5-name-into-css", [
     taskName + ":build",
   ], function () {
-    var p = gulp.src(spriteLessOutputFile)
+    var p = gulp.src(spriteCSSOutputFile)
       .pipe(replace(new RegExp(newSpritesheetName, "g"), md5SpritesheetName))
-      .pipe(gulp.dest(spriteLessOutputFolder));
+      .pipe(gulp.dest(spriteCSSOutputFolder));
+    if (buildCSSTask !== null) {
+      gulp.start(buildCSSTask);
+    }
     return p;
   });
 };

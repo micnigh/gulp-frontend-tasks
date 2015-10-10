@@ -129,6 +129,10 @@ gft.generateTask("css:scss", {
   dest: distPath + "/css/",
   watch: [
     "client/css/src/**/*.scss",
+    "!client/css/src/shared/sprites.*",
+  ],
+  dependsOn: [
+    "build:spritesheet:app",
   ],
   // reload browsersync instance after each build
   // browsersync: browsersyncInstance,
@@ -164,12 +168,13 @@ gft.generateTask("css:less", {
 ### spritesheet:less
 
 ```javascript
-gft.generateTask("spritesheet:less", {
+gft.generateTask("spritesheet", {
   taskName: "app",
   src: "client/sprites/*.png",
   dest: distPath + "/css/",
   destFileName: "spritesheet_",
-  lessSpriteFile: "client/css/src/shared/sprites.less",
+  spriteCSSFile: "client/css/src/shared/sprites.scss",
+  buildCSSTask: "build:css:scss:app",
   watch: [
     "client/sprites/*.png",
   ],
