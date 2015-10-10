@@ -52,13 +52,17 @@ gulp.task("watch:js", [
 ]);
 ```
 
-See examples for complete gulp scripts
+See examples projects for complete gulp scripts
 
 ## Why?
 
 Most projects define the same gulp tasks on every project - why not share those tasks instead?
 
 With a minimal amount of configuration most tasks can be reused for small or big projects.
+
+## Example projects
+
+[boilerplate-gulp-generic](https://github.com/micnigh/boilerplate-gulp-generic)
 
 ## API Examples
 
