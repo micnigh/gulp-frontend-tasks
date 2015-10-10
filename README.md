@@ -165,7 +165,7 @@ gft.generateTask("css:less", {
 });
 ```
 
-### spritesheet:less
+### spritesheet
 
 ```javascript
 gft.generateTask("spritesheet", {
