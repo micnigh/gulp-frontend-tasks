@@ -17,7 +17,7 @@ var babelify = require("babelify");
 var envify = require("envify/custom");
 var source = require("vinyl-source-stream");
 
-var isDev = "development" === process.env.BUILD_ENV;
+var isDev = "development" === process.env.NODE_ENV;
 
 var browserifyTask = function (gulp = require("gulp"), {
   taskName: taskName,
@@ -28,7 +28,7 @@ var browserifyTask = function (gulp = require("gulp"), {
   browserifyOptions: browserifyOptions,
   browsersync: browsersync = null,
 }) {
-  var browsersyncReady = browsersync !== null && typeof browsersync.instance !== "undefined" && typeof browsersync.instance.options !== "undefined";
+  var browsersyncReady = isDev && browsersync !== null && typeof browsersync.instance !== "undefined" && typeof browsersync.instance.options !== "undefined";
 
   browserifyOptions = deepExtend({
     extensions: [".js", ".jsx", ".es6"],
@@ -47,10 +47,9 @@ var browserifyTask = function (gulp = require("gulp"), {
     browsersyncSnippet = browsersync.instance.options.get("snippet");
   }
 
-  var bundleEnv = _.extend({}, process.env, {
-    // pass extra env info
+  var bundleEnv = _.extend({}, {
+    // pass env info
     NODE_ENV: process.env.NODE_ENV,
-    BUILD_ENV: process.env.BUILD_ENV,
     BROWSERSYNC_ENABLED: browsersyncReady ? "true" : "false",
     BROWSERSYNC_SNIPPET: browsersyncSnippet,
     _: "purge",
@@ -108,7 +107,7 @@ var browserifyTask = function (gulp = require("gulp"), {
       .pipe(buffer());
 
     if (isDev) {
-      p
+      p = p
         .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(rename({
           extname: ".js",
@@ -116,13 +115,13 @@ var browserifyTask = function (gulp = require("gulp"), {
         .pipe(sourcemaps.write("./"))
         .pipe(gulp.dest(dest));
     } else {
-      p
+      p = p
         .once("data", function () {
           uglifyStartTime = process.hrtime();
         })
         .pipe(uglify())
         .on("end", function () {
-          gutil.log(`Bundled ${chalk.cyan(taskName+":uglify:"+destFileName)} ${chalk.magenta(prettyTime(process.hrtime(uglifyStartTime)))}`);
+          gutil.log(`Uglified ${chalk.cyan(taskName+":uglify:"+destFileName)} ${chalk.magenta(prettyTime(process.hrtime(uglifyStartTime)))}`);
         });
     }
 

@@ -7,7 +7,7 @@ var gutil = require("gulp-util");
 var size = require("gulp-size");
 var chalk = require("chalk");
 
-var isDev = "development" === process.env.BUILD_ENV;
+var isDev = "development" === process.env.NODE_ENV;
 
 var generateScssTask = function generateScssTask(gulp, options) {
   if (gulp === undefined) gulp = require("gulp");
