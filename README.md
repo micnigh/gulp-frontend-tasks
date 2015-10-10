@@ -174,7 +174,6 @@ gft.generateTask("spritesheet:less", {
 
 ## TODO
 
-- Add scss task
 - Organize dependencies
 - Publish to NPM
 - Come up with a better name
