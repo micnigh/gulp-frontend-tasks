@@ -115,7 +115,7 @@ var browserifyTask = function browserifyTask(gulp, _ref) {
     p = p.pipe(gulp.dest(dest));
 
     if (isDev && watchify_enabled && browsersync !== null) {
-      p = p.pipe(browsersync.stream({ match: "**/*.js" }));
+      p = p.pipe(browsersync.stream({ match: [/.js$/] }));
     }
 
     p = p.pipe(size({
