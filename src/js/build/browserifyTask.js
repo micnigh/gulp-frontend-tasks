@@ -47,9 +47,8 @@ var browserifyTask = function (gulp = require("gulp"), {
     browsersyncSnippet = browsersync.instance.options.get("snippet");
   }
 
-  var bundleEnv = _.extend({}, {
+  var bundleEnv = _.extend({}, process.env, {
     // pass env info
-    NODE_ENV: process.env.NODE_ENV,
     BROWSERSYNC_ENABLED: browsersyncReady ? "true" : "false",
     BROWSERSYNC_SNIPPET: browsersyncSnippet,
     _: "purge",
