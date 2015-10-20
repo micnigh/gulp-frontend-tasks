@@ -1,6 +1,6 @@
 {
   "name": "gulp-frontend-tasks",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "A collection of common front end gulp tasks",
   "author": "Michael Nigh <contact@mnigh.com>",
   "license": "MIT",
