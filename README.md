@@ -63,6 +63,7 @@ With a minimal amount of configuration most tasks can be reused for small or big
 ## Example projects
 
 [boilerplate-gulp-generic](https://github.com/micnigh/boilerplate-gulp-generic)
+[yet-another-isomorphic-blog](https://github.com/micnigh/yet-another-isomorphic-blog)
 
 ## API Examples
 
