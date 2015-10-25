@@ -87,6 +87,7 @@ var browserifyTask = function (gulp = require("gulp"), {
   }));
 
   b.transform(envify(bundleEnv));
+  b.transform("strictify");
 
   var bundle = function () {
     var bundleStartTime = process.hrtime();

@@ -36,6 +36,7 @@
     "less-plugin-clean-css": "^1.5.1",
     "merge-stream": "^1.0.0",
     "pretty-hrtime": "^1.0.1",
+    "strictify": "^0.2.0",
     "underscore": "^1.8.3",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.4.0"
