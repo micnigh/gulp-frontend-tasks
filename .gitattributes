@@ -1,4 +1,6 @@
-# Convert text file line endings to lf
-* text=auto
+* text eol=lf
 
-*.js    text
+*.png binary
+*.gif binary
+*.jpg binary
+*.jpeg binary
