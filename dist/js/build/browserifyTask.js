@@ -40,7 +40,7 @@ var browserifyTask = function browserifyTask() {
     extensions: [".js", ".jsx", ".es6"],
     externals: [],
     requires: [],
-    transformConfigs: {}
+    transforms: {}
   }, browserifyOptions);
 
   if (typeof destFileName === "undefined") {
@@ -86,10 +86,10 @@ var browserifyTask = function browserifyTask() {
     b.require(requires[i]);
   }
 
-  b.transform(babelify.configure({
+  b.transform(babelify.configure(deepExtend({
     sourceMap: isDev,
     sourceMapRelative: "/source/"
-  }));
+  }, browserifyOptions.transforms.babelify)));
 
   b.transform(envify(bundleEnv));
   b.transform("strictify");
