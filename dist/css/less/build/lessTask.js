@@ -1,5 +1,3 @@
-"use strict";
-
 var less = require("gulp-less");
 var sourcemaps = require("gulp-sourcemaps");
 var LessPluginCleanCSS = require("less-plugin-clean-css");
@@ -11,15 +9,14 @@ var chalk = require("chalk");
 
 var isDev = "development" === process.env.NODE_ENV;
 
-var generateLessTask = function generateLessTask(gulp, options) {
-  if (gulp === undefined) gulp = require("gulp");
-  var taskName = options.taskName;
-  var entries = options.entries;
-  var _options$includes = options.includes;
-  var includes = _options$includes === undefined ? ["node_modules/"] : _options$includes;
-  var dest = options.dest;
-  var _options$browsersync = options.browsersync;
-  var browsersync = _options$browsersync === undefined ? null : _options$browsersync;
+var generateLessTask = function (gulp = require("gulp"), options) {
+  var {
+    taskName: taskName,
+    entries: entries,
+    includes = ["node_modules/"],
+    dest: dest,
+    browsersync = null
+  } = options;
 
   var lessPlugins = [];
   if (!isDev) {

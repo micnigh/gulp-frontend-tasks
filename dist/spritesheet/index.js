@@ -1,8 +1,4 @@
-"use strict";
-
-module.exports = function (gulp, options) {
-  if (gulp === undefined) gulp = require("gulp");
-
+module.exports = function (gulp = require("gulp"), options) {
   require("./build/")(gulp, options);
   require("./watch/")(gulp, options);
 };

@@ -1,13 +1,10 @@
-"use strict";
-
 var _ = require("underscore");
 var gWatch = require("gulp-watch");
 
-var generateSpritesheetTasks = function generateSpritesheetTasks(gulp, _ref) {
-  if (gulp === undefined) gulp = require("gulp");
-  var taskName = _ref.taskName;
-  var watch = _ref.watch;
-
+var generateSpritesheetTasks = function (gulp = require("gulp"), {
+  taskName: taskName,
+  watch: watch
+}) {
   var buildTaskName = "build:spritesheet:" + taskName;
   taskName = "watch:spritesheet:" + taskName;
   gulp.task(taskName, function () {

@@ -1,7 +1,3 @@
-"use strict";
-
-module.exports = function (gulp, options) {
-  if (gulp === undefined) gulp = require("gulp");
-
+module.exports = function (gulp = require("gulp"), options) {
   return require("./generateTasks")(gulp, options);
 };

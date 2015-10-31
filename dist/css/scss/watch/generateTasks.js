@@ -1,13 +1,10 @@
-"use strict";
-
 var _ = require("underscore");
 var gWatch = require("gulp-watch");
 
-var generateLessTasks = function generateLessTasks(gulp, _ref) {
-  if (gulp === undefined) gulp = require("gulp");
-  var taskName = _ref.taskName;
-  var watch = _ref.watch;
-
+var generateLessTasks = function (gulp = require("gulp"), {
+  taskName: taskName,
+  watch: watch
+}) {
   var buildTaskName = "build:css:scss:" + taskName;
   taskName = "watch:css:scss:" + taskName;
   gulp.task(taskName, function () {

@@ -1,5 +1,3 @@
-"use strict";
-
 var _ = require("underscore");
 
 // based off of http://stackoverflow.com/a/29563346

@@ -1,25 +1,19 @@
-"use strict";
-
 var glob = require("glob");
 var deepExtend = require("../../util/deepExtend");
 
 var browserifyTask = require("./browserifyTask");
 
-var generateJsTask = function generateJsTask(gulp, options) {
-  if (gulp === undefined) gulp = require("gulp");
-
-  var generateJsBrowserifyTaskWrapper = function generateJsBrowserifyTaskWrapper(_ref) {
-    var taskName = _ref.taskName;
-    var entries = _ref.entries;
-    var _ref$includes = _ref.includes;
-    var includes = _ref$includes === undefined ? ["node_modules/", "shared/"] : _ref$includes;
-    var dest = _ref.dest;
-    var destFileName = _ref.destFileName;
-    var browserifyOptions = _ref.browserify;
-    var _ref$watchify_enabled = _ref.watchify_enabled;
-    var watchify_enabled = _ref$watchify_enabled === undefined ? false : _ref$watchify_enabled;
-    var browsersync = _ref.browsersync;
-
+var generateJsTask = function (gulp = require("gulp"), options) {
+  var generateJsBrowserifyTaskWrapper = function ({
+    taskName: taskName,
+    entries: entries,
+    includes = ["node_modules/", "shared/"],
+    dest: dest,
+    destFileName: destFileName,
+    browserify: browserifyOptions,
+    watchify_enabled = false,
+    browsersync: browsersync
+  }) {
     var runningBrowserifyTasks = [];
 
     gulp.task("build:js:" + taskName, ["build:js:browserify:" + taskName]);
@@ -31,9 +25,9 @@ var generateJsTask = function generateJsTask(gulp, options) {
     }
 
     var subTasks = [];
-    entries.forEach(function (entry) {
+    entries.forEach(entry => {
       var entryFiles = glob.sync(entry);
-      entryFiles.forEach(function (entryFile) {
+      entryFiles.forEach(entryFile => {
         var relativePath = entryFile.replace(entry.split("*")[0], "");
         var entryFileTaskName = taskName + ":" + entryFile;
 
@@ -65,12 +59,8 @@ var generateJsTask = function generateJsTask(gulp, options) {
     });
     gulp.task(taskName, subTasks);
 
-    var stopRunningTasks = function stopRunningTasks() {
-      runningBrowserifyTasks.forEach(function (_ref2) {
-        var taskName = _ref2.taskName;
-        var pipe = _ref2.pipe;
-        var bundle = _ref2.bundle;
-
+    var stopRunningTasks = function () {
+      runningBrowserifyTasks.forEach(function ({ taskName: taskName, pipe: pipe, bundle: bundle }) {
         pipe.emit("exit");
         if (typeof bundle.close !== "undefined") {
           console.log("closing browserify task " + taskName + "");
@@ -85,9 +75,7 @@ var generateJsTask = function generateJsTask(gulp, options) {
     };
   };
 
-  var generateJsBrowserify = function generateJsBrowserify() {
-    var previousGenerateJsBrowserifyResult = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-
+  var generateJsBrowserify = function (previousGenerateJsBrowserifyResult = null) {
     if (previousGenerateJsBrowserifyResult !== null) {
       previousGenerateJsBrowserifyResult.stopRunningTasks();
     }
@@ -95,9 +83,7 @@ var generateJsTask = function generateJsTask(gulp, options) {
   };
   var generateJsBrowserifyResult = generateJsBrowserify();
 
-  var generateJsWatchify = function generateJsWatchify() {
-    var previousGenerateJsWatchifyResult = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-
+  var generateJsWatchify = function (previousGenerateJsWatchifyResult = null) {
     if (previousGenerateJsWatchifyResult !== null) {
       previousGenerateJsWatchifyResult.stopRunningTasks();
     }

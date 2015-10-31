@@ -1,7 +1,5 @@
 // Based off of Lodash's chunk
 // See http://stackoverflow.com/a/29930022
-"use strict";
-
 module.exports = function (a, n) {
   var i = 0;
   var length = a.length;

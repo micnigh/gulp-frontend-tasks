@@ -1,23 +1,22 @@
-"use strict";
-
 var _ = require("underscore");
 var gWatch = require("gulp-watch");
 
-var generateJsTasks = function generateJsTasks(gulp, _ref) {
-  if (gulp === undefined) gulp = require("gulp");
-  var taskName = _ref.taskName;
-  var watch = _ref.watch;
-  var _ref$jsBuildTaskResults$watchify = _ref.jsBuildTaskResults.watchify;
-  var generateJsWatchify = _ref$jsBuildTaskResults$watchify.generateJsTasks;
-  var generateJsWatchifyResult = _ref$jsBuildTaskResults$watchify.generateJsTasksResult;
-  var _ref$browsersync = _ref.browsersync;
-  var browsersync = _ref$browsersync === undefined ? null : _ref$browsersync;
-
+var generateJsTasks = function (gulp = require("gulp"), {
+  taskName: taskName,
+  watch: watch,
+  jsBuildTaskResults: {
+    watchify: {
+      generateJsTasks: generateJsWatchify,
+      generateJsTasksResult: generateJsWatchifyResult
+    }
+  },
+  browsersync = null
+}) {
   var buildTaskName = "build:js:watchify:" + taskName;
   if (browsersync !== null) {
-    browsersync.instance.emitter.on("init", function () {
+    browsersync.instance.emitter.on("init", () => {
       // regenerate js so we can embed browsersync snippet
-      console.log("browsersync ready - reload task " + buildTaskName);
+      console.log(`browsersync ready - reload task ${ buildTaskName }`);
       generateJsWatchifyResult = generateJsWatchify(generateJsWatchifyResult);
       gulp.start(buildTaskName);
     });
