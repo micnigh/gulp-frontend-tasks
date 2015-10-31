@@ -1,3 +1,5 @@
+"use strict";
+
 var sass = require("gulp-sass");
 var sourcemaps = require("gulp-sourcemaps");
 var autoprefixer = require("gulp-autoprefixer");
@@ -7,14 +9,16 @@ var chalk = require("chalk");
 
 var isDev = "development" === process.env.NODE_ENV;
 
-var generateScssTask = function (gulp = require("gulp"), options) {
-  var {
-    taskName: taskName,
-    entries: entries,
-    includes = ["node_modules/"],
-    dest: dest,
-    browsersync = null
-  } = options;
+var generateScssTask = function generateScssTask() {
+  var gulp = arguments.length <= 0 || arguments[0] === undefined ? require("gulp") : arguments[0];
+  var options = arguments[1];
+  var taskName = options.taskName;
+  var entries = options.entries;
+  var _options$includes = options.includes;
+  var includes = _options$includes === undefined ? ["node_modules/"] : _options$includes;
+  var dest = options.dest;
+  var _options$browsersync = options.browsersync;
+  var browsersync = _options$browsersync === undefined ? null : _options$browsersync;
 
   var scssPipe = gulp.src(entries);
 

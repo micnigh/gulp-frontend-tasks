@@ -1,3 +1,5 @@
+"use strict";
+
 // Based off of Lodash's chunk
 // See http://stackoverflow.com/a/29930022
 module.exports = function (a, n) {

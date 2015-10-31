@@ -1,9 +1,13 @@
+"use strict";
+
+function _typeof(obj) { return obj && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
 _ = require("underscore");
 
-var deepClone = function (object) {
+var deepClone = function deepClone(object) {
   var clone = _.clone(object);
   _.each(clone, function (value, key) {
-    if (typeof value === "object") {
+    if ((typeof value === "undefined" ? "undefined" : _typeof(value)) === "object") {
       clone[key] = deepClone(value);
     }
   });

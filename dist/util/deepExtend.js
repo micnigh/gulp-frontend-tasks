@@ -1,3 +1,7 @@
+"use strict";
+
+function _typeof(obj) { return obj && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
 var _ = require("underscore");
 
 // based off of http://stackoverflow.com/a/29563346
@@ -5,7 +9,7 @@ var _ = require("underscore");
 function deepExtendObj(target, source) {
   for (var prop in source) {
     if (source.hasOwnProperty(prop)) {
-      if (target[prop] && typeof source[prop] === "object") {
+      if (target[prop] && _typeof(source[prop]) === "object") {
         deepExtendObj(target[prop], source[prop]);
       } else {
         target[prop] = source[prop];

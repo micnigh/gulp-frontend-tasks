@@ -1,3 +1,5 @@
+"use strict";
+
 var _ = require("underscore");
 var path = require("path");
 var buffer = require("gulp-buffer");
@@ -19,15 +21,19 @@ var source = require("vinyl-source-stream");
 
 var isDev = "development" === process.env.NODE_ENV;
 
-var browserifyTask = function (gulp = require("gulp"), {
-  taskName: taskName,
-  dest: dest,
-  destFileName: destFileName,
-  relativePath: relativePath,
-  watchify_enabled = false,
-  browserifyOptions: browserifyOptions,
-  browsersync = null
-}) {
+var browserifyTask = function browserifyTask() {
+  var gulp = arguments.length <= 0 || arguments[0] === undefined ? require("gulp") : arguments[0];
+  var _ref = arguments[1];
+  var taskName = _ref.taskName;
+  var dest = _ref.dest;
+  var destFileName = _ref.destFileName;
+  var relativePath = _ref.relativePath;
+  var _ref$watchify_enabled = _ref.watchify_enabled;
+  var watchify_enabled = _ref$watchify_enabled === undefined ? false : _ref$watchify_enabled;
+  var browserifyOptions = _ref.browserifyOptions;
+  var _ref$browsersync = _ref.browsersync;
+  var browsersync = _ref$browsersync === undefined ? null : _ref$browsersync;
+
   var browsersyncReady = isDev && browsersync !== null && typeof browsersync.instance !== "undefined" && typeof browsersync.instance.options !== "undefined";
 
   browserifyOptions = deepExtend({
@@ -54,10 +60,9 @@ var browserifyTask = function (gulp = require("gulp"), {
     _: "purge"
   });
 
-  var {
-    externals: externals,
-    requires: requires
-  } = browserifyOptions;
+  var _browserifyOptions = browserifyOptions;
+  var externals = _browserifyOptions.externals;
+  var requires = _browserifyOptions.requires;
 
   if (isDev) {
     _.extend(browserifyOptions, { debug: true });
@@ -73,11 +78,11 @@ var browserifyTask = function (gulp = require("gulp"), {
 
   var b = browserify(browserifyOptions);
 
-  for (let i = 0; i < externals.length; i++) {
+  for (var i = 0; i < externals.length; i++) {
     b.external(externals[i]);
   }
 
-  for (let i = 0; i < requires.length; i++) {
+  for (var i = 0; i < requires.length; i++) {
     b.require(requires[i]);
   }
 
@@ -89,14 +94,14 @@ var browserifyTask = function (gulp = require("gulp"), {
   b.transform(envify(bundleEnv));
   b.transform("strictify");
 
-  var bundle = function () {
+  var bundle = function bundle() {
     var bundleStartTime = process.hrtime();
     var uglifyStartTime = null;
 
     var p = b.bundle().on("error", function (msg) {
       gutil.log(chalk.red(msg.toString()));
     }).on("end", function () {
-      gutil.log(`Bundled ${ chalk.cyan(taskName + ":bundle:" + destFileName) } ${ chalk.magenta(prettyTime(process.hrtime(bundleStartTime))) }`);
+      gutil.log("Bundled " + chalk.cyan(taskName + ":bundle:" + destFileName) + " " + chalk.magenta(prettyTime(process.hrtime(bundleStartTime))));
     })
 
     // convert back to gulp pipe
@@ -110,7 +115,7 @@ var browserifyTask = function (gulp = require("gulp"), {
       p = p.once("data", function () {
         uglifyStartTime = process.hrtime();
       }).pipe(uglify()).on("end", function () {
-        gutil.log(`Uglified ${ chalk.cyan(taskName + ":uglify:" + destFileName) } ${ chalk.magenta(prettyTime(process.hrtime(uglifyStartTime))) }`);
+        gutil.log("Uglified " + chalk.cyan(taskName + ":uglify:" + destFileName) + " " + chalk.magenta(prettyTime(process.hrtime(uglifyStartTime))));
       });
     }
 

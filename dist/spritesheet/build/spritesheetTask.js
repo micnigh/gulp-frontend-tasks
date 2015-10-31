@@ -1,3 +1,5 @@
+"use strict";
+
 var imagemin = require("gulp-imagemin");
 var spritesmith = require("gulp.spritesmith");
 var merge = require("merge-stream");
@@ -9,16 +11,17 @@ var replace = require("gulp-replace");
 var rename = require("gulp-rename");
 var crypto = require("crypto");
 
-var generateSpritesheetTask = function (gulp = require("gulp"), options) {
-  var {
-    taskName: taskName,
-    src: src,
-    dest: dest,
-    destFileName: destFileName,
-    spriteCSSFile: spriteCSSFile,
-    buildCSSTask = null,
-    dependsOn: dependsOn
-  } = options;
+var generateSpritesheetTask = function generateSpritesheetTask() {
+  var gulp = arguments.length <= 0 || arguments[0] === undefined ? require("gulp") : arguments[0];
+  var options = arguments[1];
+  var taskName = options.taskName;
+  var src = options.src;
+  var dest = options.dest;
+  var destFileName = options.destFileName;
+  var spriteCSSFile = options.spriteCSSFile;
+  var _options$buildCSSTask = options.buildCSSTask;
+  var buildCSSTask = _options$buildCSSTask === undefined ? null : _options$buildCSSTask;
+  var dependsOn = options.dependsOn;
 
   gulp.task(taskName, dependsOn.concat([taskName + ":build", taskName + ":inject-md5-name-into-css"]));
 
