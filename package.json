@@ -1,6 +1,6 @@
 {
   "name": "gulp-frontend-tasks",
-  "version": "0.10.5",
+  "version": "0.10.6",
   "description": "A collection of common front end gulp tasks",
   "author": "Michael Nigh <contact@mnigh.com>",
   "license": "MIT",
@@ -42,5 +42,11 @@
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.6.0"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "peerDependencies": {
+    "babel-plugin-syntax-async-functions": "^6.0.14",
+    "babel-plugin-transform-regenerator": "^6.0.14",
+    "babel-preset-es2015": "^6.0.14",
+    "babel-preset-react": "^6.0.14"
+  }
 }
