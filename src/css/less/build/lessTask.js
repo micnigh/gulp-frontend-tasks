@@ -52,7 +52,7 @@ var generateLessTask = function (gulp = require("gulp"), options) {
 
   if (isDev && browsersync !== null) {
     lessPipe = lessPipe.pipe(browsersync.stream({ match: [
-      /.css$/,
+      "**/*.css",
     ]}));
   }
 

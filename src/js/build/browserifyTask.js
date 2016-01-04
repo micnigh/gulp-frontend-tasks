@@ -130,7 +130,7 @@ var browserifyTask = function (gulp = require("gulp"), {
 
     if (isDev && watchify_enabled && browsersync !== null) {
       p = p.pipe(browsersync.stream({ match: [
-        /.js$/,
+        "**/*.js",
       ]}));
     }
 

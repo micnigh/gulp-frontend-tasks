@@ -42,7 +42,7 @@ var generateScssTask = function generateScssTask() {
   scssPipe = scssPipe.pipe(gulp.dest(dest));
 
   if (isDev && browsersync !== null) {
-    scssPipe = scssPipe.pipe(browsersync.stream({ match: [/.css$/] }));
+    scssPipe = scssPipe.pipe(browsersync.stream({ match: ["**/*.css"] }));
   }
 
   scssPipe = scssPipe.pipe(size({

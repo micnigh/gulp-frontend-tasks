@@ -45,7 +45,7 @@ var generateScssTask = function (gulp = require("gulp"), options) {
 
   if (isDev && browsersync !== null) {
     scssPipe = scssPipe.pipe(browsersync.stream({ match: [
-      /.css$/,
+      "**/*.css",
     ]}));
   }
 
